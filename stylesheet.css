@@ -1,12 +1,30 @@
-#first {
-    border: 1px solid black;
+
+body {
+    max-width: 1064px;
+    
+    margin: auto;
 }
 
+
+
+
+
 #first {
+    border: 1px solid black;
+    margin-top: 20%;
+}
+
+#second {
     border: 1px solid black;
 
 }
 
-#first {
+#third {
  border: 1px solid black;
 }
+
+
+#name {
+
+}
+

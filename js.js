@@ -4,6 +4,7 @@
 var picOne = document.getElementById('first');
 var picTwo = document.getElementById('second');
 var picthree = document.getElementById('third');
+var listItems = document.getElementById('name');
 
 var allPics = [];
 
@@ -46,7 +47,45 @@ function showRandomPic() {
     first.alt = allPics[random1].name;
     first.title = allPics[random1].name;
     allPics[random1].shown++;
+    
     console.log('current pic, ', allPics[random1]);
+
+    var random2 = Math.floor(Math.random() * allPics.length);
+    while(random1 === random2) {
+        random2 = Math.floor(Math.random() * allPics.length);
+    }
+    second.src = allPics[random2].filepath;
+    second.alt = allPics[random2].name;
+    second.title = allPics[random2].name;
+    allPics[random2].shown++;
+    
+    console.log('second pic,' , allPics[random2]);
+
+   
+    var random3 = Math.floor(Math.random() * allPics.length);
+    while(random3 === random2 || random3 === random1) {
+        random3 = random3 = Math.floor(Math.random() * allPics.length);
+    }
+    third.src = allPics[random3].filepath;
+    third.alt = allPics[random3].name;
+    third.title = allPics[random3].name;
+    allPics[random3].shown++;
+    
+    console.log('third pic,' , allPics[random3]);
+
+    allPics[random1, random2, random3].clicks++;
 }
 
 showRandomPic();
+
+
+
+picOne.addEventListener('click', handleClick);
+picTwo.addEventListener('click', handleClick);
+picthree.addEventListener('click', handleClick);
+function handleClick(event) {
+    console.log('target, ', event.target);
+  showRandomPic();
+
+}
+
