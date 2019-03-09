@@ -38,8 +38,8 @@ new Pictures ('sweep.png', 'sweep');
 new Pictures ('tauntaun.jpg', 'tauntaun');
 new Pictures ('unicorn.jpg', 'unicorn');
 new Pictures ('usb.gif', 'usb');
-new Pictures ('water-can.jpg', 'water-can');
-new Pictures ('wine-glass.jpg', 'wine-glass');
+new Pictures ('water-can.jpg', 'water can');
+new Pictures ('wine-glass.jpg', 'wine glass');
 
 
 
@@ -88,10 +88,10 @@ function choosePictures() {
   }
   
   function handleClick(event) {
-    if (count < 26) {   //
+    if (count < 25) {   //
       increaseClickCount(event.target.title);
       oneTurn();
-    } else if (count === 26) {  //
+    } else if (count === 25) {  //
       createTable();
       count++;  //
     } else {
