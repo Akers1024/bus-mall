@@ -2,9 +2,28 @@
 
 
 var picOne = document.getElementById('first');
-var picTwo = document.getElementById('second');
+var picTwo= document.getElementById('second');
 var picThree = document.getElementById('third');
 
+
+
+
+
+
+
+
+
+var busMallChart;  //we need a variable for chart
+var chartDrawn = false;  //make boolean for chart
+var votes = [];
+var title = [];
+
+function upDateChart() {
+  for (var i= 0; i < imgs.length; i++) {
+    title[i] = imgs[i].displayName;
+    votes[i] = imgs[i].clicks;
+  }
+}
 
 var imgs = [];
 var count = 0;
@@ -92,11 +111,12 @@ function choosePictures() {
       increaseClickCount(event.target.title);
       oneTurn();
     } else if (count === 25) {  //
-      createTable();
+      drawchart();
       count++;  //
     } else {
       return;
     }
+    upDateChart();
   }
   
   function increaseClickCount(title) {
@@ -106,50 +126,64 @@ function choosePictures() {
         break;
       }
     }
-  }
-  
-  function createTable() {
-    var row = document.createElement('tr');
-    var headerName = document.createElement('td');
-    headerName.innerText = 'Item Name';
-    row.appendChild(headerName);
-  
-    var headerTotalViews = document.createElement('td');  
-    headerTotalViews.innerText = 'Times Displayed';    
-    row.appendChild(headerTotalViews);
-  
-    var headerTotalClicks = document.createElement('td');
-    headerTotalClicks.innerText = 'Total Clicks';
-    row.appendChild(headerTotalClicks);
-  
-    var headerPercentClicked = document.createElement('td');
-    headerPercentClicked.innerText = 'Percent Clicked';
-    row.appendChild(headerPercentClicked);
-  
-    resultsTable.appendChild(row);
-  
-    for (var i = 0; i < imgs.length; i++) {
-      var imgRow = document.createElement('tr');
-      var nameData = document.createElement('td');
-      nameData.innerText = imgs[i].displayName;
-      imgRow.appendChild(nameData);
-  
-      var totalViewsData = document.createElement('td');
-      totalViewsData.innerText = imgs[i].shown;   //
-      imgRow.appendChild(totalViewsData);
-  
-      var totalClicksData = document.createElement('td');
-      totalClicksData.innerText = imgs[i].clicks;
-      imgRow.appendChild(totalClicksData);
-  
-      var totalPercentClicked = document.createElement('td');
-      var percentage = (Math.floor((imgs[i].clicks / imgs[i].shown) * 100)); //
-      if (isNaN (percentage)) {
-        percentage = 0;
-      }
-      totalPercentClicked.innerText = (percentage + '%');
-      imgRow.appendChild(totalPercentClicked);
-  
-      resultsTable.appendChild(imgRow);
+    
+localStorage.busMallCatalogue = JSON.stringify(imgs);
+console.log('stringified ',JSON.stringify(imgs));
+}
+
+
+
+
+
+
+var data = {
+  labels: title,
+  datasets: [
+    {
+      data: votes,
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(255, 159, 64, 0.2)',
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(255, 159, 64, 0.2)',
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(255, 159, 64, 0.2)',
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+      ],
     }
-  }
+  ]
+};
+
+
+function drawChart() {
+  
+  var ctx = document.getElementById("myChart").getContext("2d");
+
+ 
+  busMallChart = new Chart(ctx, {
+    type: 'bar',
+    data: data,
+   
+
+  });
+  
+  chartDrawn = true;
+} 
+
+
+
+
+
