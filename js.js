@@ -29,7 +29,7 @@ var views = [];
 
       
 
-function returnClicks() {
+function backClicks() {
   var retrievedData = localStorage.getItem('imgs');
   if(retrievedData !== null) {
     imgs = JSON.parse(retrievedData);
@@ -83,7 +83,7 @@ function gettingImages() {   //setting new values
         new BusMallPictures('wine-glass.jpg', 'Wine Glass');
 }
 
-function oneTurn() {    //talked about in class
+function flip() {    //talked about in class
   var currentPictures = choosePictures();
   render(currentPictures);
 
@@ -117,10 +117,10 @@ function render(currentPictures) {
 function handleClick(event) {
   if (turnCount < 25) {
     increaseClickCount(event.target.title);     
-    oneTurn();
+    flip();//
   } else if (turnCount === 25) {
     turnCount++;
-    //createTable();
+    
     drawChart();  // csll table 
     saveClicks();  //call saves click
   } else {
@@ -161,12 +161,12 @@ function drawChart() {
 seahawks();
 
 function seahawks() {
-  returnClicks();
+  backClicks();
   if (imgs.length === 0) {
     gettingImages();   ///
-    oneTurn();
+    flip(); //
   } else {
-    oneTurn();
+    flip();//
     updateChartArrays();
   }
 }
