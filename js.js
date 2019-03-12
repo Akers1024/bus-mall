@@ -1,155 +1,216 @@
 'use strict';
 
 
-var picOne = document.getElementById('first');
-var picTwo = document.getElementById('second');
-var picThree = document.getElementById('third');
+
+var colorChart;  //
+var chartDrawn = false;  //giving chart a boolean
+
+var pictureOne = document.getElementById('pic1');  //getting image slots from HTML
+var pictureTwo = document.getElementById('pic2');
+var pictureThree = document.getElementById('pic3');
+
+
+document.getElementById('chart').addEventListener('click', function () {  // getting chart from HTML
+  drawChart();
+});
+
 
 
 var imgs = [];
-var count = 0;
+var previousPictures = [];
+var turnCount = 0;
+//setting variables for project 
+var clicks = [];
+var title = [];
+var views = [];
 
-function Pictures(name, displayName) {
-    this.filepath = `img/${name}`;
-    this.displayName = displayName;
-    this.name = name;
-    this.shown = 0;
-    this.clicks = 0;
-    //this.id = id;
-    imgs.push(this);
+
+
+
+function returnClicks() {
+  var retrievedData = localStorage.getItem('imgs');
+  if(retrievedData !== null) {
+    imgs = JSON.parse(retrievedData);
+  }                                        //returns ans stores # of clicks
 }
 
 
-new Pictures ('bag.jpg', 'bag');
-new Pictures ('banana.jpg', 'banana');
-new Pictures ('bathroom.jpg', 'bathroom');
-new Pictures ('boots.jpg', 'boots');
-new Pictures ('breakfast.jpg', 'breakfast');
-new Pictures ('bubblegum.jpg', 'bubblegum');
-new Pictures ('chair.jpg', 'chair');
-new Pictures ('cthulhu.jpg', 'cthulhu');
-new Pictures ('dog-duck.jpg', 'dog-duck');
-new Pictures ('dragon.jpg', 'dragon');
-new Pictures ('pen.jpg', 'pen');
-new Pictures ('pet-sweep.jpg', 'pet-sweep');
-new Pictures ('scissors.jpg', 'scissors');
-new Pictures ('shark.jpg', 'shark');
-new Pictures ('sweep.png', 'sweep');
-new Pictures ('tauntaun.jpg', 'tauntaun');
-new Pictures ('unicorn.jpg', 'unicorn');
-new Pictures ('usb.gif', 'usb');
-new Pictures ('water-can.jpg', 'water can');
-new Pictures ('wine-glass.jpg', 'wine glass');
-
-
+function BusMallPictures(name, displayName) {   //constructor fucntion 
+  this.name = name;
+  this.displayName = displayName;
+  this.filepath = `img/${name}`;
+  this.views = 0;
+  this.clicks = 0;
+  
+  imgs.push(this);
+}
 
 function choosePictures() {
-    var currentPictures = [];
+  var currentPictures = [];
+  do {
     do {
-      do {
-        var randomNumber = Math.floor(Math.random() * imgs.length);
-        var picture = imgs[randomNumber];
-      } while (previousPictures.includes(picture) || currentPictures.includes(picture));
-      currentPictures.push(picture);
-    } while (currentPictures.length < 3);
+      var randomNumber = Math.floor(Math.random() * imgs.length);
+      var picture = imgs[randomNumber];
+    } while (previousPictures.includes(picture) || currentPictures.includes(picture));
+    currentPictures.push(picture);
+  } while (currentPictures.length < 3);    //doing the math for the pictures to show up 
   
-    return currentPictures;
+  return currentPictures;
+}
+function gettingImages() {   //setting new values
+        imgs = [];
+        new BusMallPictures('bag.jpg', 'Bag');
+        new BusMallPictures('banana.jpg', 'Banana');
+        new BusMallPictures('bathroom.jpg', 'Bathroom');
+        new BusMallPictures('boots.jpg', 'Boots');
+        new BusMallPictures('breakfast.jpg', 'Breakfast');
+        new BusMallPictures('bubblegum.jpg', 'Bubblegum');
+        new BusMallPictures('chair.jpg', 'Chair');
+        new BusMallPictures('cthulhu.jpg', 'Cthulhu');
+        new BusMallPictures('dog-duck.jpg', 'Dog Duck');
+        new BusMallPictures('dragon.jpg', 'Dragon');
+        new BusMallPictures('pen.jpg', 'Pen');
+        new BusMallPictures('pet-sweep.jpg', 'Pet Sweep');
+        new BusMallPictures('scissors.jpg', 'Scissors');
+        new BusMallPictures('shark.jpg', 'Shark');
+        new BusMallPictures('sweep.png', 'Sweep');
+        new BusMallPictures('tauntaun.jpg', 'Taun Taun');
+        new BusMallPictures('unicorn.jpg', 'Unicorn');
+        new BusMallPictures('usb.gif', 'USB');
+        new BusMallPictures('water-can.jpg', 'Water Can');
+        new BusMallPictures('wine-glass.jpg', 'Wine Glass');
+}
+
+function oneTurn() {
+  var currentPictures = choosePictures();
+  render(currentPictures);
+
+  for (var i = 0; i < 3; i++) {     //
+    currentPictures[i].views++;
   }
-  
-  var previousPictures = [];
-  oneTurn();
-  
-  function oneTurn() {
-    var currentPictures = choosePictures();
-    render(currentPictures);
-  
-    for (var i = 0; i < 3; i++) {
-      currentPictures[i].shown++;  //
-    }
-  
-    previousPictures = currentPictures;
-  
-    count += 1;  //
+
+  previousPictures = currentPictures;
+
+  turnCount++;
+}
+
+function render(currentPictures) {
+  pictureOne.src = currentPictures[0].filepath;
+  pictureOne.title = currentPictures[0].displayName;    //giving each pic a value and giving it a click handler 
+  pictureOne.names = currentPictures[0].displayName;
+
+  pictureTwo.src = currentPictures[1].filepath;
+  pictureTwo.title = currentPictures[1].displayName;
+  pictureTwo.names = currentPictures[1].displayName;
+
+  pictureThree.src = currentPictures[2].filepath;
+  pictureThree.title = currentPictures[2].displayName;
+  pictureThree.names = currentPictures[2].displayName;
+
+  pictureOne.addEventListener('click', handleClick);
+  pictureTwo.addEventListener('click', handleClick);
+  pictureThree.addEventListener('click', handleClick);
+}
+
+function handleClick(event) {
+  if (turnCount < 25) {
+    increaseClickCount(event.target.title);     
+    oneTurn();
+  } else if (turnCount === 25) {
+    turnCount++;
+    //createTable();
+    drawChart();  // csll table 
+    saveClicks();  //call saves click
+  } else {
+    return;
   }
-  
-  function render(currentPictures) {
-    picOne.src = currentPictures[0].filepath;
-    picOne.title = currentPictures[0].displayName;
-  
-    picTwo.src = currentPictures[1].filepath;
-    picTwo.title = currentPictures[1].displayName;
-  
-    picThree.src = currentPictures[2].filepath;
-    picThree.title = currentPictures[2].displayName;
-  
-    picOne.addEventListener('click', handleClick);
-    picTwo.addEventListener('click', handleClick);
-    picThree.addEventListener('click', handleClick);
-  }
-  
-  function handleClick(event) {
-    if (count < 25) {   //
-      increaseClickCount(event.target.title);
-      oneTurn();
-    } else if (count === 25) {  //
-      createTable();
-      count++;  //
-    } else {
-      return;
-    }
-  }
-  
-  function increaseClickCount(title) {
-    for (var i = 0; i < imgs.length; i++) {
-      if (imgs[i].displayName === title) {
-        imgs[i].clicks++;
-        break;
-      }
-    }
-  }
-  
-  function createTable() {
-    var row = document.createElement('tr');
-    var headerName = document.createElement('td');
-    headerName.innerText = 'Item Name';
-    row.appendChild(headerName);
-  
-    var headerTotalViews = document.createElement('td');  
-    headerTotalViews.innerText = 'Times Displayed';    
-    row.appendChild(headerTotalViews);
-  
-    var headerTotalClicks = document.createElement('td');
-    headerTotalClicks.innerText = 'Total Clicks';
-    row.appendChild(headerTotalClicks);
-  
-    var headerPercentClicked = document.createElement('td');
-    headerPercentClicked.innerText = 'Percent Clicked';
-    row.appendChild(headerPercentClicked);
-  
-    resultsTable.appendChild(row);
-  
-    for (var i = 0; i < imgs.length; i++) {
-      var imgRow = document.createElement('tr');
-      var nameData = document.createElement('td');
-      nameData.innerText = imgs[i].displayName;
-      imgRow.appendChild(nameData);
-  
-      var totalViewsData = document.createElement('td');
-      totalViewsData.innerText = imgs[i].shown;   //
-      imgRow.appendChild(totalViewsData);
-  
-      var totalClicksData = document.createElement('td');
-      totalClicksData.innerText = imgs[i].clicks;
-      imgRow.appendChild(totalClicksData);
-  
-      var totalPercentClicked = document.createElement('td');
-      var percentage = (Math.floor((imgs[i].clicks / imgs[i].shown) * 100)); //
-      if (isNaN (percentage)) {
-        percentage = 0;
-      }
-      totalPercentClicked.innerText = (percentage + '%');
-      imgRow.appendChild(totalPercentClicked);
-  
-      resultsTable.appendChild(imgRow);
+}
+
+function increaseClickCount(title) {
+  for (var i = 0; i < imgs.length; i++) {  //adding number ofclicks
+    if (imgs[i].displayName === title) {
+      imgs[i].clicks++;
+      break;
     }
   }
+  updateChartArrays();
+}
+
+
+function updateChartArrays() {
+  for (var i = 0; i < imgs.length; i++) {
+    title[i] = imgs[i].displayName;
+    clicks[i] = imgs[i].clicks;     //updtaes the chart of clicks
+    views[i] = imgs[i].views;
+  }
+}
+   //creating the chart as shown in lecture
+function drawChart() {
+  var c = document.getElementById('myChart').getContext('2d');
+
+  colorChart = new Chart(c, {  //  making sure we are making a bar chat 
+    type: 'bar',
+    data: data,
+  });
+  chartDrawn = true;
+}
+
+
+seahawks();
+
+function seahawks() {
+  returnClicks();
+  if (imgs.length === 0) {
+    gettingImages();   ///
+    oneTurn();
+  } else {
+    oneTurn();
+    updateChartArrays();
+  }
+}
+
+
+document.getElementById('images').addEventListener('click', function (event) {  
+  increaseClickCount(event.target.id);
+  if (chartDrawn) {
+    colorChart.update();  //
+  }
+});
+
+function saveClicks() {
+  var clicksString = JSON.stringify(imgs);
+  localStorage.setItem('imgs', clicksString);
+}
+
+var data = {
+  labels: title,  //where the bottom displays the data
+  backgroundColor: 'black',
+  datasets: [
+    {
+      label: 'Clicks',   //header
+      data: clicks,
+      backgroundColor: [    //setting colors for all bars shown 
+        'rgba(46, 213, 115,1.0)',
+        'rgba(255, 121, 121,1.0)',
+        'rgba(236, 204, 104,1.0)',
+        'rgba(183, 21, 64,1.0)',
+        'rgba(30, 55, 153,1.0)',
+        'rgba(247, 241, 227,1.0)',
+        'rgba(235, 47, 6,1.0)',
+        'rgba(19, 15, 64,1.0)',
+        'rgba(255, 206, 86, 0.5)',
+        'rgba(246, 185, 59,1.0)',
+        'rgba(255, 71, 87,1.0)',
+        'rgba(106, 176, 76,1.0)',
+        'rgba(255, 99, 132, 0.5)',
+        'rgba(249, 202, 36,1.0)',
+        'rgba(190, 46, 221,1.0)',
+        'rgba(197, 108, 240,1.0)',//
+        'rgba(252, 92, 101,1.0)',
+        'rgba(246, 229, 141,1.0)',
+        'rgba(235, 77, 75,1.0)',
+        'rgba(255, 184, 184,1.0)'
+      ]
+    }
+  ]
+};
