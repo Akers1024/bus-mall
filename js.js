@@ -27,6 +27,8 @@ var views = [];
 
 
 
+      
+
 function returnClicks() {
   var retrievedData = localStorage.getItem('imgs');
   if(retrievedData !== null) {
@@ -81,7 +83,7 @@ function gettingImages() {   //setting new values
         new BusMallPictures('wine-glass.jpg', 'Wine Glass');
 }
 
-function oneTurn() {
+function oneTurn() {    //talked about in class
   var currentPictures = choosePictures();
   render(currentPictures);
 
@@ -146,9 +148,9 @@ function updateChartArrays() {
 }
    //creating the chart as shown in lecture
 function drawChart() {
-  var c = document.getElementById('myChart').getContext('2d');
+  var bar = document.getElementById('myChart').getContext('2d');
 
-  colorChart = new Chart(c, {  //  making sure we are making a bar chat 
+  colorChart = new Chart(bar, {  //  making sure we are making a bar chat 
     type: 'bar',
     data: data,
   });
