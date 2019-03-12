@@ -60,27 +60,27 @@ function choosePictures() {
   return currentPictures;
 }
 function gettingImages() {   //setting new values
-        imgs = [];
-        new BusMallPictures('bag.jpg', 'Bag');
-        new BusMallPictures('banana.jpg', 'Banana');
-        new BusMallPictures('bathroom.jpg', 'Bathroom');
-        new BusMallPictures('boots.jpg', 'Boots');
-        new BusMallPictures('breakfast.jpg', 'Breakfast');
-        new BusMallPictures('bubblegum.jpg', 'Bubblegum');
-        new BusMallPictures('chair.jpg', 'Chair');
-        new BusMallPictures('cthulhu.jpg', 'Cthulhu');
-        new BusMallPictures('dog-duck.jpg', 'Dog Duck');
-        new BusMallPictures('dragon.jpg', 'Dragon');
-        new BusMallPictures('pen.jpg', 'Pen');
-        new BusMallPictures('pet-sweep.jpg', 'Pet Sweep');
-        new BusMallPictures('scissors.jpg', 'Scissors');
-        new BusMallPictures('shark.jpg', 'Shark');
-        new BusMallPictures('sweep.png', 'Sweep');
-        new BusMallPictures('tauntaun.jpg', 'Taun Taun');
-        new BusMallPictures('unicorn.jpg', 'Unicorn');
-        new BusMallPictures('usb.gif', 'USB');
-        new BusMallPictures('water-can.jpg', 'Water Can');
-        new BusMallPictures('wine-glass.jpg', 'Wine Glass');
+  imgs = [];
+  new BusMallPictures('bag.jpg', 'Bag');
+  new BusMallPictures('banana.jpg', 'Banana');
+  new BusMallPictures('bathroom.jpg', 'Bathroom');
+  new BusMallPictures('boots.jpg', 'Boots');
+  new BusMallPictures('breakfast.jpg', 'Breakfast');
+  new BusMallPictures('bubblegum.jpg', 'Bubblegum');
+  new BusMallPictures('chair.jpg', 'Chair');
+  new BusMallPictures('cthulhu.jpg', 'Cthulhu');
+  new BusMallPictures('dog-duck.jpg', 'Dog Duck');
+  new BusMallPictures('dragon.jpg', 'Dragon');
+  new BusMallPictures('pen.jpg', 'Pen');
+  new BusMallPictures('pet-sweep.jpg', 'Pet Sweep');
+  new BusMallPictures('scissors.jpg', 'Scissors');
+  new BusMallPictures('shark.jpg', 'Shark');
+  new BusMallPictures('sweep.png', 'Sweep');
+  new BusMallPictures('tauntaun.jpg', 'Taun Taun');
+  new BusMallPictures('unicorn.jpg', 'Unicorn');
+  new BusMallPictures('usb.gif', 'USB');
+  new BusMallPictures('water-can.jpg', 'Water Can');
+  new BusMallPictures('wine-glass.jpg', 'Wine Glass');
 }
 
 function flip() {    //talked about in class
