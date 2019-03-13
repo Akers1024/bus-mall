@@ -1,9 +1,9 @@
-'use strict';
+'use strict'
 
 
+var colorChart;
 
-var colorChart;  //
-var chartDrawn = false;  //giving chart a boolean
+var chartDrawn = false;
 
 var pictureOne = document.getElementById('pic1');  //getting image slots from HTML
 var pictureTwo = document.getElementById('pic2');
@@ -14,8 +14,6 @@ document.getElementById('chart').addEventListener('click', function () {  // get
   drawChart();
 });
 
-
-
 var imgs = [];
 var previousPictures = [];
 var turnCount = 0;
@@ -23,18 +21,6 @@ var turnCount = 0;
 var clicks = [];
 var title = [];
 var views = [];
-
-
-
-
-      
-
-function backClicks() {
-  var retrievedData = localStorage.getItem('imgs');
-  if(retrievedData !== null) {
-    imgs = JSON.parse(retrievedData);
-  }                                        //returns ans stores # of clicks
-}
 
 
 function BusMallPictures(name, displayName) {   //constructor fucntion 
@@ -46,7 +32,6 @@ function BusMallPictures(name, displayName) {   //constructor fucntion
   
   imgs.push(this);
 }
-
 function choosePictures() {
   var currentPictures = [];
   do {
@@ -82,20 +67,15 @@ function gettingImages() {   //setting new values
   new BusMallPictures('water-can.jpg', 'Water Can');
   new BusMallPictures('wine-glass.jpg', 'Wine Glass');
 }
-
 function flip() {    //talked about in class
   var currentPictures = choosePictures();
   render(currentPictures);
-
   for (var i = 0; i < 3; i++) {     //
     currentPictures[i].views++;
   }
-
   previousPictures = currentPictures;
-
   turnCount++;
 }
-
 function render(currentPictures) {
   pictureOne.src = currentPictures[0].filepath;
   pictureOne.title = currentPictures[0].displayName;    //giving each pic a value and giving it a click handler 
@@ -113,77 +93,61 @@ function render(currentPictures) {
   pictureTwo.addEventListener('click', handleClick);
   pictureThree.addEventListener('click', handleClick);
 }
-
 function handleClick(event) {
   if (turnCount < 25) {
-    increaseClickCount(event.target.title);     
-    flip();//
+    backClicks(event.target.title);     //
+    flip();// calls function 
   } else if (turnCount === 25) {
     turnCount++;
-    
     drawChart();  // csll table 
     saveClicks();  //call saves click
   } else {
     return;
   }
 }
-
-function increaseClickCount(title) {
-  for (var i = 0; i < imgs.length; i++) {  //adding number ofclicks
-    if (imgs[i].displayName === title) {
-      imgs[i].clicks++;
-      break;
-    }
-  }
-  updateChartArrays();
+function backClicks() {
+  var clicksone = localStorage.getItem('imgs');
+  if(clicksone !== null) {
+    imgs = JSON.parse(clicksone);
+  }                                        //returns ans stores # of clicks
 }
-
-
-function updateChartArrays() {
+function chartUpdate() {
   for (var i = 0; i < imgs.length; i++) {
     title[i] = imgs[i].displayName;
     clicks[i] = imgs[i].clicks;     //updtaes the chart of clicks
     views[i] = imgs[i].views;
   }
 }
-   //creating the chart as shown in lecture
+//creating the chart as shown in lecture
 function drawChart() {
   var bar = document.getElementById('myChart').getContext('2d');
-
   colorChart = new Chart(bar, {  //  making sure we are making a bar chat 
     type: 'bar',
     data: data,
   });
   chartDrawn = true;
 }
-
-
 seahawks();
-
 function seahawks() {
   backClicks();
   if (imgs.length === 0) {
-    gettingImages();   ///
+    gettingImages();   //calls 
     flip(); //
   } else {
-    flip();//
-    updateChartArrays();
+    flip(); //calls flip
+    chartUpdate();
   }
 }
-
-
 document.getElementById('images').addEventListener('click', function (event) {  
-  increaseClickCount(event.target.id);
+  backClicks(event.target.id);  
   if (chartDrawn) {
-    colorChart.update();  //
+    colorChart.update(); //calls 
   }
 });
-
 function saveClicks() {
   var clicksString = JSON.stringify(imgs);
   localStorage.setItem('imgs', clicksString);
 }
-
 var data = {
   labels: title,  //where the bottom displays the data
   backgroundColor: 'black',
